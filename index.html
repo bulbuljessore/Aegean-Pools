@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: #E9F0F8; color: #0B1F38; font-family: 'Schibsted Grotesk', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: #1F5FA8; text-decoration: none; }
+  a:hover { color: #04347C; }
+  button, input, select, textarea { font-family: inherit; }
+  ::selection { background: #1F5FA8; color: #FFFFFF; }
+  [data-hscroll] { scrollbar-width: none; -ms-overflow-style: none; }
+  [data-hscroll]::-webkit-scrollbar { display: none; }
+  @keyframes ap2-acc { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+  @keyframes ap2-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes ap2-rise { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+</style>
+</helmet>
+
+<div style="width:100%;overflow:hidden;background:#E9F0F8">
+
+<!-- ============ NAV ============ -->
+<header data-screen-label="Nav" style="position:fixed;top:0;left:0;right:0;z-index:80;background:rgba(233,240,248,0.82);backdrop-filter:saturate(160%) blur(16px);-webkit-backdrop-filter:saturate(160%) blur(16px);border-bottom:1px solid rgba(11,31,56,0.1)">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px);display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:68px">
+
+    <a href="#top" style="display:flex;align-items:center;gap:0.3em;min-height:44px;flex-shrink:0">
+      <img src="images/logo-mark.png" alt="Aegean Pools" style="height:clamp(34px,3.8vw,42px);width:auto;display:block" />
+    </a>
+
+    <sc-if value="{{ isWide }}" hint-placeholder-val="{{ true }}">
+      <nav style="display:flex;align-items:center;gap:clamp(16px,2.2vw,34px)">
+        <a href="#work" style="display:inline-flex;align-items:center;min-height:44px;font:500 0.75rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#3F5771">Work</a>
+        <a href="#craft" style="display:inline-flex;align-items:center;min-height:44px;font:500 0.75rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#3F5771">Craft</a>
+        <a href="#builder" style="display:inline-flex;align-items:center;min-height:44px;font:500 0.75rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#3F5771">Builder</a>
+        <a href="#areas" style="display:inline-flex;align-items:center;min-height:44px;font:500 0.75rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#3F5771">Areas</a>
+        <a href="#faq" style="display:inline-flex;align-items:center;min-height:44px;font:500 0.75rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#3F5771">FAQ</a>
+        <a href="tel:+61406999456" style="display:inline-flex;align-items:center;min-height:44px;padding-left:clamp(8px,1.4vw,20px);border-left:1px solid rgba(11,31,56,0.14);font:500 0.75rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.06em;color:#0B1F38">0406 999 456</a>
+        <a href="#enquire" onClick="{{ openModal }}" style="display:inline-flex;align-items:center;min-height:44px;padding:0 24px;border:1px solid rgba(11,31,56,0.3);border-radius:999px;font:500 0.75rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#0B1F38;transition:background 260ms ease,color 260ms ease,border-color 260ms ease" style-hover="background:#F4F1EA;color:#070C14;border-color:#0B1F38">Enquire</a>
+      </nav>
+    </sc-if>
+
+    <sc-if value="{{ isNarrow }}">
+      <div style="display:flex;align-items:center;gap:8px">
+        <a href="tel:+61406999456" aria-label="Call Aegean Pools" style="display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 16px;border:1px solid rgba(11,31,56,0.26);border-radius:999px;font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#0B1F38">Call</a>
+        <button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:inline-flex;flex-direction:column;justify-content:center;gap:5px;min-width:44px;min-height:44px;padding:0 13px;background:none;border:1px solid rgba(11,31,56,0.26);border-radius:999px;cursor:pointer">
+          <span style="display:block;width:16px;height:1px;background:#0B1F38"></span>
+          <span style="display:block;width:16px;height:1px;background:#0B1F38"></span>
+        </button>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ menuOpen }}">
+    <div style="border-top:1px solid rgba(11,31,56,0.1);background:#E9F0F8;padding:10px clamp(18px,4vw,56px) 26px;display:flex;flex-direction:column">
+      <a href="#work" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:56px;font:600 1.625rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38;border-bottom:1px solid rgba(244,241,234,0.08)">Work</a>
+      <a href="#craft" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:56px;font:600 1.625rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38;border-bottom:1px solid rgba(244,241,234,0.08)">Craft</a>
+      <a href="#builder" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:56px;font:600 1.625rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38;border-bottom:1px solid rgba(244,241,234,0.08)">Builder</a>
+      <a href="#areas" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:56px;font:600 1.625rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38;border-bottom:1px solid rgba(244,241,234,0.08)">Areas</a>
+      <a href="#faq" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:56px;font:600 1.625rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38;border-bottom:1px solid rgba(244,241,234,0.08)">FAQ</a>
+      <a href="#enquire" onClick="{{ openModal }}" style="display:flex;align-items:center;justify-content:center;min-height:56px;margin-top:20px;border:1px solid rgba(244,241,234,0.4);border-radius:999px;font:500 0.8125rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#0B1F38">Request a consultation</a>
+    </div>
+  </sc-if>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" data-screen-label="Hero" style="position:relative;height:100svh;min-height:600px;overflow:hidden;background:#E9F0F8">
+  <div data-parallax style="position:absolute;top:-8%;left:0;right:0;height:116%;background:url('images/hero-twilight.png') center 46%/cover no-repeat;will-change:transform"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(96deg,rgba(6,16,30,0.8) 0%,rgba(6,16,30,0.58) 42%,rgba(6,16,30,0.24) 74%,rgba(6,16,30,0.12) 100%),linear-gradient(180deg,rgba(6,16,30,0.42) 0%,rgba(6,16,30,0.05) 34%,rgba(6,16,30,0.72) 100%)"></div>
+
+
+  <div style="position:absolute;inset:0;display:flex;align-items:flex-end;overflow:hidden">
+    <div style="width:100%;max-width:1600px;margin:0 auto;padding:clamp(96px,14vh,150px) clamp(18px,4vw,56px) clamp(44px,7vh,84px)">
+
+      <div data-reveal style="opacity:0;transform:translateY(26px);transition:opacity 1000ms ease,transform 1000ms cubic-bezier(0.16,1,0.3,1);display:flex;align-items:center;gap:14px;margin-bottom:clamp(22px,3.2vw,34px)">
+        <span style="display:block;width:clamp(30px,5vw,64px);height:1px;background:rgba(255,255,255,0.55)"></span>
+        <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.2em;text-transform:uppercase;color:#D3E0F0">Sydney · Concrete since 2004</span>
+      </div>
+
+      <h1 data-reveal style="opacity:0;transform:translateY(26px);transition:opacity 1000ms ease 120ms,transform 1000ms cubic-bezier(0.16,1,0.3,1) 120ms;margin:0;max-width:13ch;font:600 clamp(3rem,9vw,7.5rem)/0.92 'Schibsted Grotesk',system-ui,sans-serif;letter-spacing:-0.035em;color:#FFFFFF;text-wrap:balance">A small number of <span style="color:#9CC3F0">extraordinary</span> pools.</h1>
+
+      <div data-reveal style="opacity:0;transform:translateY(26px);transition:opacity 1000ms ease 260ms,transform 1000ms cubic-bezier(0.16,1,0.3,1) 260ms;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:clamp(22px,4vw,60px);margin-top:clamp(28px,4vh,48px)">
+        <p style="margin:0;flex:1 1 320px;max-width:44ch;font:400 clamp(1rem,0.85rem + 0.4vw,1.1875rem)/1.62 'Schibsted Grotesk',sans-serif;color:#DCE6F2;text-wrap:pretty">A boutique, family-owned builder of high-end residential concrete pools. Tony Papageorgiou designs and builds every one personally.</p>
+        <a href="#enquire" onClick="{{ openModal }}" style="display:inline-flex;align-items:center;justify-content:center;min-height:58px;margin-left:auto;padding:0 clamp(30px,3.2vw,46px);background:#FFFFFF;color:#04347C;border-radius:999px;font:500 0.8125rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;flex-shrink:0;transition:background 260ms ease,color 260ms ease" style-hover="background:#1F5FA8;color:#FFFFFF">Start your project</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ STATEMENT ============ -->
+<section data-screen-label="Statement" style="background:#F4F1EA;color:#0B1018;padding:clamp(72px,11vw,160px) 0">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px)">
+    <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(0.16,1,0.3,1)">
+      <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.2em;text-transform:uppercase;color:#04347C">Ethos</div>
+      <p style="margin:clamp(28px,4vw,48px) 0 0;max-width:20ch;font:600 clamp(2.25rem,6.4vw,5rem)/1.04 'Schibsted Grotesk',system-ui,sans-serif;letter-spacing:-0.032em;color:#0B1018;text-wrap:balance">Quality over quantity. You will never be treated as a number.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(28px,5vw,90px);margin-top:clamp(44px,6vw,80px)">
+      <p data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 100ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 100ms;margin:0;flex:1 1 330px;max-width:52ch;font:400 clamp(1rem,0.9rem + 0.3vw,1.1875rem)/1.7 'Schibsted Grotesk',sans-serif;color:#3A4450;text-wrap:pretty">Aegean Pools designs and constructs a small number of exceptional residential concrete pools each year, with genuine personal attention on every one. Our history in the Sydney market has given us trusted relationships with pool designers, architects, home builders and suppliers — and, more importantly, directly with the people we build for.</p>
+
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 200ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 200ms;flex:1 1 300px;display:flex;flex-direction:column">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 0;border-top:1px solid rgba(11,16,24,0.16)">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#5A6470">Founded</span>
+          <span style="font:600 clamp(1.5rem,2.6vw,2.125rem)/1 'Schibsted Grotesk',system-ui,sans-serif;color:#04347C">2004</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 0;border-top:1px solid rgba(11,16,24,0.16)">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#5A6470">Generations in pools</span>
+          <span style="font:600 clamp(1.5rem,2.6vw,2.125rem)/1 'Schibsted Grotesk',system-ui,sans-serif;color:#04347C">Four</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 0;border-top:1px solid rgba(11,16,24,0.16);border-bottom:1px solid rgba(11,16,24,0.16)">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#5A6470">NSW licence</span>
+          <span style="font:600 clamp(1.5rem,2.6vw,2.125rem)/1 'Schibsted Grotesk',system-ui,sans-serif;color:#04347C">189208C</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SELECTED WORK — horizontal ============ -->
+<section id="work" data-screen-label="Selected work" style="background:#E9F0F8;padding:clamp(72px,11vw,150px) 0 clamp(56px,8vw,110px)">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px)">
+    <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(0.16,1,0.3,1);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:26px;margin-bottom:clamp(34px,4.5vw,58px)">
+      <div>
+        <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.2em;text-transform:uppercase;color:#1F5FA8">Selected work</div>
+        <h2 style="margin:20px 0 0;max-width:14ch;font:600 clamp(2rem,4.4vw,3.5rem)/1.06 'Schibsted Grotesk',system-ui,sans-serif;letter-spacing:-0.03em;color:#0B1F38">Eleven recent builds</h2>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onClick="{{ scrollPrev }}" aria-label="Previous projects" style="display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;background:none;border:1px solid rgba(11,31,56,0.24);border-radius:999px;color:#0B1F38;font:400 1.125rem/1 'Schibsted Grotesk',sans-serif;cursor:pointer;transition:background 240ms ease,color 240ms ease" style-hover="background:#1F5FA8;color:#FFFFFF">←</button>
+        <button onClick="{{ scrollNext }}" aria-label="Next projects" style="display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;background:none;border:1px solid rgba(11,31,56,0.24);border-radius:999px;color:#0B1F38;font:400 1.125rem/1 'Schibsted Grotesk',sans-serif;cursor:pointer;transition:background 240ms ease,color 240ms ease" style-hover="background:#1F5FA8;color:#FFFFFF">→</button>
+      </div>
+    </div>
+  </div>
+
+  <div data-hscroll data-rail style="display:flex;gap:clamp(12px,1.6vw,22px);overflow-x:auto;scroll-snap-type:x mandatory;padding:0 clamp(18px,4vw,56px) 8px">
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 0ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 0ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/infinity-skyline.png" alt="Infinity edge — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Hunters Hill</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Infinity edge</span>
+      </figcaption>
+    </figure>
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 60ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 60ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/pool-spa-blade.png" alt="Spa and water blade — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Mosman</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Spa &amp; water blade</span>
+      </figcaption>
+    </figure>
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 120ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 120ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/glass-window-pool.png" alt="Glass window — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Woollahra</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Glass window</span>
+      </figcaption>
+    </figure>
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 0ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 0ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/lap-bamboo.png" alt="Lap pool — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Lane Cove</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Lap pool</span>
+      </figcaption>
+    </figure>
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 60ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 60ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/lap-dark-tile.png" alt="Dark interior finish — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Northbridge</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Dark interior finish</span>
+      </figcaption>
+    </figure>
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 120ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 120ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/lap-pool-night.png" alt="Lap pool and spa — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Putney</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Lap pool &amp; spa</span>
+      </figcaption>
+    </figure>
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 0ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 0ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/courtyard-lap.png" alt="Courtyard lap pool — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Balmain</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Courtyard lap pool</span>
+      </figcaption>
+    </figure>
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 60ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 60ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/hero-dusk.png" alt="Pool and pavilion — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Longueville</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Pool &amp; pavilion</span>
+      </figcaption>
+    </figure>
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 120ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 120ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/aerial.png" alt="Pool and spa — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Gladesville</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Pool &amp; spa</span>
+      </figcaption>
+    </figure>
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 0ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 0ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/deck-loungers.png" alt="Pool and surrounds — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Castle Cove</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Pool &amp; surrounds</span>
+      </figcaption>
+    </figure>
+
+    <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 60ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 60ms;margin:0;flex:0 0 clamp(272px,68vw,620px);scroll-snap-align:start">
+      <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2">
+        <img src="images/waterline-tile.png" alt="Waterline tiling — Aegean Pools project" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.04)" />
+      </div>
+      <figcaption style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-top:16px;border-top:1px solid rgba(11,31,56,0.14);margin-top:16px">
+        <span style="font:600 1.25rem/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Willoughby</span>
+        <span style="font:500 0.625rem/1.4 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Waterline tiling</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ CRAFT / SERVICES ============ -->
+<section id="craft" data-screen-label="Craft" style="background:#F4F1EA;color:#0B1018;padding:clamp(72px,11vw,150px) 0">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px);display:flex;flex-wrap:wrap;gap:clamp(32px,5vw,100px);align-items:flex-start">
+
+    <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(0.16,1,0.3,1);flex:1 1 280px;max-width:400px;position:sticky;top:110px">
+      <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.2em;text-transform:uppercase;color:#04347C">Craft</div>
+      <h2 style="margin:20px 0 0;max-width:12ch;font:600 clamp(2rem,4.4vw,3.5rem)/1.06 'Schibsted Grotesk',system-ui,sans-serif;letter-spacing:-0.03em;color:#0B1018">What we take on</h2>
+      <p style="margin:24px 0 0;max-width:36ch;font:400 1.0625rem/1.68 'Schibsted Grotesk',sans-serif;color:#3A4450;text-wrap:pretty">One builder, one point of contact, across the whole job — from council approvals through to the surrounds.</p>
+      <div style="margin-top:clamp(28px,3.4vw,40px);aspect-ratio:4/3;overflow:hidden;background:#D6E3F2">
+        <img src="images/shotcrete.png" alt="Shotcrete being sprayed into a pool shell" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+      </div>
+      <p style="margin:14px 0 0;max-width:34ch;font:500 0.6875rem/1.6 'Schibsted Grotesk',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#5A6470">The shell, sprayed on site</p>
+    </div>
+
+    <div style="flex:1 1 460px;display:flex;flex-direction:column;border-top:1px solid rgba(11,16,24,0.16)">
+
+      <div data-reveal style="opacity:0;transform:translateY(20px);transition:opacity 800ms ease,transform 800ms cubic-bezier(0.16,1,0.3,1);padding:clamp(26px,3.4vw,42px) 0;border-bottom:1px solid rgba(11,16,24,0.16)">
+        <div>
+          <h3 style="margin:0;font:600 clamp(1.5rem,2.6vw,2.125rem)/1.16 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1018">New concrete pool design &amp; construction</h3>
+        </div>
+        <p style="margin:14px 0 0;max-width:50ch;font:400 1rem/1.68 'Schibsted Grotesk',sans-serif;color:#3A4450;text-wrap:pretty">Fully engineered, site-specific concrete shells. Plunge pools, spas, infinity and wet edges, glass walls and windows, water features and feature walls.</p>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(20px);transition:opacity 800ms ease 60ms,transform 800ms cubic-bezier(0.16,1,0.3,1) 60ms;padding:clamp(26px,3.4vw,42px) 0;border-bottom:1px solid rgba(11,16,24,0.16)">
+        <div>
+          <h3 style="margin:0;font:600 clamp(1.5rem,2.6vw,2.125rem)/1.16 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1018">Lap pools</h3>
+        </div>
+        <p style="margin:14px 0 0;max-width:50ch;font:400 1rem/1.68 'Schibsted Grotesk',sans-serif;color:#3A4450;text-wrap:pretty">Long, narrow forms designed for daily swimming and for the tight, awkward side setbacks that Sydney blocks tend to give you.</p>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(20px);transition:opacity 800ms ease 120ms,transform 800ms cubic-bezier(0.16,1,0.3,1) 120ms;padding:clamp(26px,3.4vw,42px) 0;border-bottom:1px solid rgba(11,16,24,0.16)">
+        <div>
+          <h3 style="margin:0;font:600 clamp(1.5rem,2.6vw,2.125rem)/1.16 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1018">Structural &amp; engineering work</h3>
+        </div>
+        <p style="margin:14px 0 0;max-width:50ch;font:400 1rem/1.68 'Schibsted Grotesk',sans-serif;color:#3A4450;text-wrap:pretty">Retaining, piering, suspended slabs and difficult-access sites. The projects other builders quote around are the ones we're set up for.</p>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(20px);transition:opacity 800ms ease 180ms,transform 800ms cubic-bezier(0.16,1,0.3,1) 180ms;padding:clamp(26px,3.4vw,42px) 0;border-bottom:1px solid rgba(11,16,24,0.16)">
+        <div>
+          <h3 style="margin:0;font:600 clamp(1.5rem,2.6vw,2.125rem)/1.16 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1018">Council approvals &amp; DA</h3>
+        </div>
+        <p style="margin:14px 0 0;max-width:50ch;font:400 1rem/1.68 'Schibsted Grotesk',sans-serif;color:#3A4450;text-wrap:pretty">Complying Development or a full DA — we prepare the documentation and manage the approval so the build starts on solid ground.</p>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(20px);transition:opacity 800ms ease 240ms,transform 800ms cubic-bezier(0.16,1,0.3,1) 240ms;padding:clamp(26px,3.4vw,42px) 0;border-bottom:1px solid rgba(11,16,24,0.16)">
+        <div>
+          <h3 style="margin:0;font:600 clamp(1.5rem,2.6vw,2.125rem)/1.16 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1018">Landscaping &amp; surrounds</h3>
+        </div>
+        <p style="margin:14px 0 0;max-width:50ch;font:400 1rem/1.68 'Schibsted Grotesk',sans-serif;color:#3A4450;text-wrap:pretty">Coping, paving, decking, fencing and planting resolved with the pool rather than after it, so the finished space reads as one piece of work.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE BUILDER ============ -->
+<section id="builder" data-screen-label="The builder" style="background:#E9F0F8;padding:clamp(72px,11vw,150px) 0">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px)">
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(32px,5vw,90px);align-items:flex-start">
+
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(0.16,1,0.3,1);flex:1 1 clamp(280px,36%,480px);min-width:min(100%,280px)">
+        <div style="aspect-ratio:4/5;overflow:hidden;background:#D6E3F2"><img src="images/tony-portrait.png" alt="Tony Papageorgiou on site" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block" /></div>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 140ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 140ms;flex:1 1 clamp(300px,50%,720px);min-width:min(100%,300px)">
+        <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.2em;text-transform:uppercase;color:#1F5FA8">The builder</div>
+        <h2 style="margin:22px 0 0;font:600 clamp(2rem,4.4vw,3.5rem)/1.06 'Schibsted Grotesk',system-ui,sans-serif;letter-spacing:-0.03em;color:#0B1F38">Tony Papageorgiou</h2>
+        <p style="margin:clamp(26px,3vw,36px) 0 0;max-width:54ch;font:400 clamp(1rem,0.9rem + 0.3vw,1.1875rem)/1.7 'Schibsted Grotesk',sans-serif;color:#3F5771;text-wrap:pretty">Tony grew up in the swimming pool industry. His father, grandfather and great-uncle were all involved in it, and as a young kid he would go to work with them on weekends. The passion for constructing and designing pools runs deep in this family, and it was clear from early on that he would go on to build his own.</p>
+        <p style="margin:20px 0 0;max-width:54ch;font:400 clamp(1rem,0.9rem + 0.3vw,1.1875rem)/1.7 'Schibsted Grotesk',sans-serif;color:#3F5771;text-wrap:pretty">He founded Aegean Pools in 2004. He still builds every pool from start to finish with a hands-on approach, and takes pride in the total construction process with an attention to detail as if it were in his own backyard.</p>
+
+        <p style="margin:clamp(32px,4vw,48px) 0 0;max-width:26ch;font:600 clamp(1.5rem,2.8vw,2.25rem)/1.28 'Schibsted Grotesk',system-ui,sans-serif;color:#2E6FC4;text-wrap:balance">From your initial consultation with Tony, you can rest assured your pool is finished to the highest of standards.</p>
+
+        <a href="#enquire" onClick="{{ openModal }}" style="display:inline-flex;align-items:center;justify-content:center;min-height:58px;margin-top:clamp(32px,4vw,46px);padding:0 clamp(30px,3.2vw,46px);background:#1F5FA8;color:#FFFFFF;border-radius:999px;font:500 0.8125rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;transition:background 260ms ease" style-hover="background:#04347C">Talk to Tony</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AREAS ============ -->
+<section id="areas" data-screen-label="Service areas" style="background:#E9F0F8;padding:0 0 clamp(72px,11vw,150px)">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px)">
+    <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(0.16,1,0.3,1);display:flex;flex-wrap:wrap;gap:clamp(28px,5vw,90px);padding-top:clamp(48px,6vw,80px);border-top:1px solid rgba(11,31,56,0.14)">
+      <div style="flex:1 1 280px;max-width:380px">
+        <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.2em;text-transform:uppercase;color:#1F5FA8">Where we build</div>
+        <h2 style="margin:20px 0 0;max-width:12ch;font:600 clamp(2rem,4.4vw,3.5rem)/1.06 'Schibsted Grotesk',system-ui,sans-serif;letter-spacing:-0.03em;color:#0B1F38">Across Sydney</h2>
+        <p style="margin:22px 0 0;max-width:36ch;font:400 1.0625rem/1.68 'Schibsted Grotesk',sans-serif;color:#3F5771;text-wrap:pretty">Based in Ryde, building throughout the Sydney metropolitan area. If your suburb isn't listed, ask — we travel for the right project.</p>
+      </div>
+      <div style="flex:1 1 440px">
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <span style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid rgba(31,95,168,0.55);border-radius:999px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Gladesville</span>
+          <span style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid rgba(31,95,168,0.55);border-radius:999px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Hunters Hill</span>
+          <span style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid rgba(31,95,168,0.55);border-radius:999px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Lane Cove</span>
+          <span style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid rgba(31,95,168,0.55);border-radius:999px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Longueville</span>
+          <span style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid rgba(31,95,168,0.55);border-radius:999px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Mosman</span>
+          <span style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid rgba(31,95,168,0.55);border-radius:999px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Northbridge</span>
+          <span style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid rgba(31,95,168,0.55);border-radius:999px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Putney</span>
+          <span style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid rgba(31,95,168,0.55);border-radius:999px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Ryde</span>
+          <span style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid rgba(31,95,168,0.55);border-radius:999px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Willoughby</span>
+          <span style="display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid rgba(31,95,168,0.55);border-radius:999px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Woollahra</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section data-screen-label="Testimonials" style="background:#F4F1EA;color:#0B1018;padding:clamp(72px,11vw,150px) 0">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px)">
+    <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(0.16,1,0.3,1);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(34px,4.5vw,58px)">
+      <div>
+        <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.2em;text-transform:uppercase;color:#04347C">In their words</div>
+        <h2 style="margin:20px 0 0;max-width:14ch;font:600 clamp(2rem,4.4vw,3.5rem)/1.06 'Schibsted Grotesk',system-ui,sans-serif;letter-spacing:-0.03em;color:#0B1018">Client feedback</h2>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(14px,2vw,26px)">
+      <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 0ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 0ms;margin:0;flex:1 1 clamp(270px,30%,440px);min-width:min(100%,270px);background:#FFFFFF;border:1px solid rgba(11,31,56,0.12);padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between;gap:30px">
+        <blockquote style="margin:0;font:400 clamp(1.125rem,1.7vw,1.375rem)/1.5 'Schibsted Grotesk',sans-serif;color:#0B1F38;text-wrap:pretty">Tony was on site nearly every day. When the excavator hit sandstone we knew about it that morning, not three weeks later in an invoice.</blockquote>
+        <figcaption>
+          <div style="font:600 0.9375rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Sarah Whitfield</div>
+          <div style="margin-top:9px;font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Hunters Hill · 2024</div>
+        </figcaption>
+      </figure>
+
+      <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 100ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 100ms;margin:0;flex:1 1 clamp(270px,30%,440px);min-width:min(100%,270px);background:#FFFFFF;border:1px solid rgba(11,31,56,0.12);padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between;gap:30px">
+        <blockquote style="margin:0;font:400 clamp(1.125rem,1.7vw,1.375rem)/1.5 'Schibsted Grotesk',sans-serif;color:#0B1F38;text-wrap:pretty">We had quotes from two of the big volume builders. Tony was the only one who walked the block twice before he put a number on paper.</blockquote>
+        <figcaption>
+          <div style="font:600 0.9375rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Nick Karras</div>
+          <div style="margin-top:9px;font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Gladesville · 2023</div>
+        </figcaption>
+      </figure>
+
+      <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 200ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 200ms;margin:0;flex:1 1 clamp(270px,30%,440px);min-width:min(100%,270px);background:#FFFFFF;border:1px solid rgba(11,31,56,0.12);padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between;gap:30px">
+        <blockquote style="margin:0;font:400 clamp(1.125rem,1.7vw,1.375rem)/1.5 'Schibsted Grotesk',sans-serif;color:#0B1F38;text-wrap:pretty">Our block falls close to two metres front to back. Everyone else talked about the problem. Tony talked about the engineering.</blockquote>
+        <figcaption>
+          <div style="font:600 0.9375rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Anna Brennan</div>
+          <div style="margin-top:9px;font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Northbridge · 2024</div>
+        </figcaption>
+      </figure>
+
+      <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 0ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 0ms;margin:0;flex:1 1 clamp(270px,30%,440px);min-width:min(100%,270px);background:#FFFFFF;border:1px solid rgba(11,31,56,0.12);padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between;gap:30px">
+        <blockquote style="margin:0;font:400 clamp(1.125rem,1.7vw,1.375rem)/1.5 'Schibsted Grotesk',sans-serif;color:#0B1F38;text-wrap:pretty">Six years on, the shell has not moved and the tiling is exactly as it was handed over. That is the part you only find out later.</blockquote>
+        <figcaption>
+          <div style="font:600 0.9375rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">David Menon</div>
+          <div style="margin-top:9px;font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Lane Cove · 2019</div>
+        </figcaption>
+      </figure>
+
+      <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 100ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 100ms;margin:0;flex:1 1 clamp(270px,30%,440px);min-width:min(100%,270px);background:#FFFFFF;border:1px solid rgba(11,31,56,0.12);padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between;gap:30px">
+        <blockquote style="margin:0;font:400 clamp(1.125rem,1.7vw,1.375rem)/1.5 'Schibsted Grotesk',sans-serif;color:#0B1F38;text-wrap:pretty">He worked straight with our landscape designer. No blaming, no gaps between trades. It came together as one job.</blockquote>
+        <figcaption>
+          <div style="font:600 0.9375rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Claire Donnelly</div>
+          <div style="margin-top:9px;font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Mosman · 2025</div>
+        </figcaption>
+      </figure>
+
+      <figure data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 200ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 200ms;margin:0;flex:1 1 clamp(270px,30%,440px);min-width:min(100%,270px);background:#FFFFFF;border:1px solid rgba(11,31,56,0.12);padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between;gap:30px">
+        <blockquote style="margin:0;font:400 clamp(1.125rem,1.7vw,1.375rem)/1.5 'Schibsted Grotesk',sans-serif;color:#0B1F38;text-wrap:pretty">Access was through the house. I still do not fully understand how they managed it without wrecking the floors, but they did.</blockquote>
+        <figcaption>
+          <div style="font:600 0.9375rem/1 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Michael Tran</div>
+          <div style="margin-top:9px;font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Balmain · 2023</div>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" data-screen-label="FAQ" style="background:#F4F1EA;color:#0B1018;padding:0 0 clamp(72px,11vw,150px)">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px)">
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(32px,5vw,100px);padding-top:clamp(48px,6vw,80px);border-top:1px solid rgba(11,16,24,0.16)">
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(0.16,1,0.3,1);flex:1 1 280px;max-width:380px">
+        <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.2em;text-transform:uppercase;color:#04347C">Questions</div>
+        <h2 style="margin:20px 0 0;max-width:12ch;font:600 clamp(2rem,4.4vw,3.5rem)/1.06 'Schibsted Grotesk',system-ui,sans-serif;letter-spacing:-0.03em;color:#0B1018">Before you start</h2>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 120ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 120ms;flex:1 1 460px;border-top:1px solid rgba(11,16,24,0.16)">
+        <sc-for list="{{ faqs }}" as="item" hint-placeholder-count="5">
+          <div style="border-bottom:1px solid rgba(11,16,24,0.16)">
+            <button onClick="{{ item.toggle }}" aria-expanded="{{ item.expanded }}" style="display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;min-height:68px;padding:22px 0;background:none;border:0;cursor:pointer;text-align:left">
+              <span style="font:600 clamp(1.125rem,1.8vw,1.5rem)/1.3 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1018">{{ item.q }}</span>
+              <span style="flex-shrink:0;width:20px;height:20px;position:relative;display:inline-block">
+                <span style="position:absolute;left:0;top:9px;width:20px;height:1px;background:#04347C"></span>
+                <sc-if value="{{ item.isClosed }}" hint-placeholder-val="{{ true }}">
+                  <span style="position:absolute;left:9px;top:0;width:1px;height:20px;background:#04347C"></span>
+                </sc-if>
+              </span>
+            </button>
+            <sc-if value="{{ item.isOpen }}">
+              <div style="overflow:hidden;animation:ap2-acc 340ms cubic-bezier(0.16,1,0.3,1) both">
+                <p style="margin:0;padding:0 0 28px;max-width:58ch;font:400 1.0625rem/1.7 'Schibsted Grotesk',sans-serif;color:#3A4450;text-wrap:pretty">{{ item.a }}</p>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENQUIRE ============ -->
+<section id="enquire" data-screen-label="Enquire" style="background:#E9F0F8;padding:clamp(72px,11vw,150px) 0">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px)">
+
+    <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(0.16,1,0.3,1);margin-bottom:clamp(44px,6vw,80px)">
+      <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.2em;text-transform:uppercase;color:#1F5FA8">Enquire</div>
+      <h2 style="margin:22px 0 0;max-width:15ch;font:600 clamp(2.25rem,6vw,4.75rem)/1.02 'Schibsted Grotesk',system-ui,sans-serif;letter-spacing:-0.035em;color:#0B1F38;text-wrap:balance">Tell us about your project</h2>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(34px,5vw,90px)">
+
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 100ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 100ms;flex:1 1 clamp(280px,30%,420px);min-width:min(100%,280px);display:flex;flex-direction:column;gap:24px">
+        <p style="margin:0;max-width:38ch;font:400 1.0625rem/1.68 'Schibsted Grotesk',sans-serif;color:#3F5771;text-wrap:pretty">The more you can tell us about the site and what you have in mind, the more useful the first conversation will be.</p>
+        <div style="display:flex;flex-direction:column;gap:20px;padding-top:24px;border-top:1px solid rgba(11,31,56,0.14)">
+          <div>
+            <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Phone</div>
+            <a href="tel:+61406999456" style="display:inline-flex;align-items:center;min-height:44px;margin-top:6px;font:600 clamp(1.375rem,2.2vw,1.75rem)/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">0406 999 456</a>
+          </div>
+          <div>
+            <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Email</div>
+            <a href="mailto:tony@aegeanpools.com.au" style="display:inline-flex;align-items:center;min-height:44px;margin-top:6px;font:600 clamp(1.0625rem,1.6vw,1.375rem)/1.3 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38;word-break:break-word">tony@aegeanpools.com.au</a>
+          </div>
+          <div>
+            <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Studio</div>
+            <div style="margin-top:8px;font:400 1.0625rem/1.6 'Schibsted Grotesk',sans-serif;color:#0B1F38">45 Woodbine Crescent<br>Ryde NSW 2112</div>
+          </div>
+          <div>
+            <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">NSW licence</div>
+            <div style="margin-top:8px;font:400 1.0625rem/1.6 'Schibsted Grotesk',sans-serif;color:#0B1F38">189208C</div>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 200ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 200ms;flex:1 1 clamp(300px,52%,760px);min-width:min(100%,300px);display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,3vw,34px);padding:clamp(30px,4vw,56px);background:#FFFFFF;border:1px solid rgba(11,31,56,0.12)">
+        <p style="margin:0;max-width:30ch;font:600 clamp(1.5rem,2.8vw,2.125rem)/1.24 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38;text-wrap:balance">Four short steps. About a minute.</p>
+        <p style="margin:0;max-width:46ch;font:400 1.0625rem/1.68 'Schibsted Grotesk',sans-serif;color:#3F5771;text-wrap:pretty">We'll ask about you, the site, the pool you have in mind and your timing — then Tony picks it up from there.</p>
+        <div>
+          <button onClick="{{ openModal }}" style="display:inline-flex;align-items:center;justify-content:center;min-height:58px;padding:0 clamp(32px,3.2vw,50px);background:#1F5FA8;color:#FFFFFF;border:0;border-radius:999px;font:500 0.8125rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 260ms ease" style-hover="background:#04347C">Start your enquiry</button>
+        </div>
+        <sc-if value="{{ submitted }}">
+          <div style="padding-top:22px;border-top:1px solid rgba(11,31,56,0.14);font:400 1rem/1.6 'Schibsted Grotesk',sans-serif;color:#1F5FA8">Thank you — your enquiry is on its way. Tony will be in touch shortly.</div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(0.16,1,0.3,1);margin-top:clamp(48px,6vw,86px)">
+      <a href="https://maps.google.com/?q=45+Woodbine+Crescent+Ryde+NSW+2112" style="position:relative;display:block;aspect-ratio:2350/669;min-height:200px;overflow:hidden;border:1px solid rgba(11,31,56,0.14);background:#D6E3F2">
+        <img src="images/map-ryde.png" alt="Map showing Aegean Pools at 45 Woodbine Crescent, Ryde NSW 2112" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" />
+        <span style="position:absolute;left:clamp(14px,2vw,24px);bottom:clamp(14px,2vw,24px);display:inline-flex;align-items:center;min-height:44px;padding:0 22px;background:#FFFFFF;border-radius:999px;font:500 0.75rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#04347C">45 Woodbine Cres, Ryde</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTAGRAM ============ -->
+<section data-screen-label="Instagram" style="background:#E9F0F8;padding:0 0 clamp(56px,8vw,110px)">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px)">
+    <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease,transform 900ms cubic-bezier(0.16,1,0.3,1);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;padding-top:clamp(44px,5vw,72px);border-top:1px solid rgba(11,31,56,0.14);margin-bottom:clamp(26px,3.4vw,42px)">
+      <h2 style="margin:0;font:600 clamp(1.625rem,3vw,2.5rem)/1.1 'Schibsted Grotesk',system-ui,sans-serif;letter-spacing:-0.028em;color:#0B1F38">Latest from the site</h2>
+      <a href="https://www.instagram.com/aegeanpools/" style="display:inline-flex;align-items:center;min-height:44px;font:500 0.75rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#1F5FA8">@aegeanpools</a>
+    </div>
+    <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity 900ms ease 100ms,transform 900ms cubic-bezier(0.16,1,0.3,1) 100ms;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.2vw,16px)">
+      <a href="https://www.instagram.com/aegeanpools/" style="aspect-ratio:1/1;overflow:hidden;background:#D6E3F2;display:block"><img src="images/aerial.png" alt="Aegean Pools on Instagram" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 700ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.05)" /></a>
+      <a href="https://www.instagram.com/aegeanpools/" style="aspect-ratio:1/1;overflow:hidden;background:#D6E3F2;display:block"><img src="images/courtyard-lap.png" alt="Aegean Pools on Instagram" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 700ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.05)" /></a>
+      <a href="https://www.instagram.com/aegeanpools/" style="aspect-ratio:1/1;overflow:hidden;background:#D6E3F2;display:block"><img src="images/glass-window-pool.png" alt="Aegean Pools on Instagram" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 700ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.05)" /></a>
+      <a href="https://www.instagram.com/aegeanpools/" style="aspect-ratio:1/1;overflow:hidden;background:#D6E3F2;display:block"><img src="images/infinity-skyline.png" alt="Aegean Pools on Instagram" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 700ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.05)" /></a>
+      <a href="https://www.instagram.com/aegeanpools/" style="aspect-ratio:1/1;overflow:hidden;background:#D6E3F2;display:block"><img src="images/lap-pool-night.png" alt="Aegean Pools on Instagram" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 700ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.05)" /></a>
+      <a href="https://www.instagram.com/aegeanpools/" style="aspect-ratio:1/1;overflow:hidden;background:#D6E3F2;display:block"><img src="images/pool-spa-blade.png" alt="Aegean Pools on Instagram" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 700ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.05)" /></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer data-screen-label="Footer" style="background:#E9F0F8;padding:0 0 clamp(28px,3vw,44px)">
+  <div style="max-width:1600px;margin:0 auto;padding:0 clamp(18px,4vw,56px)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:clamp(28px,4vw,64px);padding:clamp(44px,5vw,72px) 0;border-top:1px solid rgba(11,31,56,0.14)">
+      <div style="flex:1 1 300px;max-width:420px">
+        <div style="display:flex;align-items:center;gap:0.3em">
+          <img src="images/logo-mark.png" alt="Aegean Pools" style="height:56px;width:auto;display:block" />
+        </div>
+        <p style="margin:18px 0 0;max-width:34ch;font:400 0.9375rem/1.68 'Schibsted Grotesk',sans-serif;color:#4A6180">Boutique, family-owned specialist builder of high-end residential concrete pools throughout Sydney.</p>
+      </div>
+      <div style="flex:0 1 auto;min-width:150px;display:flex;flex-direction:column;gap:2px">
+        <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180;margin-bottom:10px">Explore</div>
+        <a href="#work" style="display:inline-flex;align-items:center;min-height:44px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#24405F">Work</a>
+        <a href="#craft" style="display:inline-flex;align-items:center;min-height:44px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#24405F">Craft</a>
+        <a href="#builder" style="display:inline-flex;align-items:center;min-height:44px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#24405F">The builder</a>
+        <a href="#faq" style="display:inline-flex;align-items:center;min-height:44px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#24405F">FAQ</a>
+      </div>
+      <div style="flex:0 1 auto;min-width:220px;display:flex;flex-direction:column;gap:2px">
+        <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180;margin-bottom:10px">Contact</div>
+        <a href="tel:+61406999456" style="display:inline-flex;align-items:center;min-height:44px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#24405F">0406 999 456</a>
+        <a href="mailto:tony@aegeanpools.com.au" style="display:inline-flex;align-items:center;min-height:44px;font:400 0.9375rem/1.4 'Schibsted Grotesk',sans-serif;color:#24405F;word-break:break-word">tony@aegeanpools.com.au</a>
+        <a href="https://www.instagram.com/aegeanpools/" style="display:inline-flex;align-items:center;min-height:44px;font:400 0.9375rem/1 'Schibsted Grotesk',sans-serif;color:#24405F">Instagram</a>
+        <div style="margin-top:8px;font:400 0.9375rem/1.6 'Schibsted Grotesk',sans-serif;color:#4A6180">45 Woodbine Crescent<br>Ryde NSW 2112</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding-top:20px;border-top:1px solid rgba(11,31,56,0.1)">
+      <div style="font:400 0.8125rem/1.5 'Schibsted Grotesk',sans-serif;color:#4A6180">© 2026 Aegean Pools · NSW Licence No. 189208C</div>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ modalOpen }}">
+<div data-screen-label="Enquiry modal" style="position:fixed;inset:0;z-index:200;display:flex;align-items:flex-end;justify-content:center">
+  <div onClick="{{ closeModal }}" style="position:absolute;inset:0;background:rgba(11,31,56,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:ap2-fade 260ms ease both"></div>
+
+  <div role="dialog" aria-modal="true" style="position:relative;width:100%;max-width:660px;max-height:92svh;overflow-y:auto;background:#FFFFFF;border-radius:20px 20px 0 0;padding:clamp(24px,4vw,44px);animation:ap2-rise 380ms cubic-bezier(0.16,1,0.3,1) both">
+
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px">
+      <div>
+        <div style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.18em;text-transform:uppercase;color:#4A6180">{{ stepLabel }}</div>
+        <h3 style="margin:12px 0 0;max-width:18ch;font:600 clamp(1.5rem,3.4vw,2.125rem)/1.16 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38;text-wrap:balance">{{ stepTitle }}</h3>
+      </div>
+      <button onClick="{{ closeModal }}" aria-label="Close" style="flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;background:none;border:1px solid rgba(11,31,56,0.18);border-radius:999px;color:#0B1F38;font:400 1.125rem/1 'Schibsted Grotesk',sans-serif;cursor:pointer;transition:background 220ms ease,color 220ms ease" style-hover="background:#0B1F38;color:#FFFFFF">×</button>
+    </div>
+
+    <div style="display:flex;gap:6px;margin:clamp(22px,3vw,30px) 0 clamp(24px,3vw,32px)">
+      <sc-for list="{{ bars }}" as="bar" hint-placeholder-count="4">
+        <div style="flex:1;height:3px;border-radius:999px;background:rgba(11,31,56,0.14);overflow:hidden">
+          <sc-if value="{{ bar.filled }}">
+            <div style="width:100%;height:100%;background:#1F5FA8"></div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-wrap:wrap;gap:20px;animation:ap2-acc 300ms ease both">
+        <label style="flex:1 1 220px;min-width:min(100%,220px);display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Name</span>
+          <input type="text" placeholder="Your full name" style="min-height:52px;padding:0 2px;background:none;border:0;border-bottom:1px solid rgba(11,31,56,0.24);color:#0B1F38;font:400 1.0625rem/1 'Schibsted Grotesk',sans-serif;outline:none;transition:border-color 240ms ease" style-focus="border-bottom-color:#1F5FA8" />
+        </label>
+        <label style="flex:1 1 220px;min-width:min(100%,220px);display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Email</span>
+          <input type="email" placeholder="you@example.com" style="min-height:52px;padding:0 2px;background:none;border:0;border-bottom:1px solid rgba(11,31,56,0.24);color:#0B1F38;font:400 1.0625rem/1 'Schibsted Grotesk',sans-serif;outline:none;transition:border-color 240ms ease" style-focus="border-bottom-color:#1F5FA8" />
+        </label>
+        <label style="flex:1 1 220px;min-width:min(100%,220px);display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Phone</span>
+          <input type="tel" placeholder="Best number to reach you" style="min-height:52px;padding:0 2px;background:none;border:0;border-bottom:1px solid rgba(11,31,56,0.24);color:#0B1F38;font:400 1.0625rem/1 'Schibsted Grotesk',sans-serif;outline:none;transition:border-color 240ms ease" style-focus="border-bottom-color:#1F5FA8" />
+        </label>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isStep2 }}">
+      <div style="display:flex;flex-wrap:wrap;gap:20px;animation:ap2-acc 300ms ease both">
+        <label style="flex:1 1 220px;min-width:min(100%,220px);display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Suburb</span>
+          <input type="text" placeholder="Where is the site?" style="min-height:52px;padding:0 2px;background:none;border:0;border-bottom:1px solid rgba(11,31,56,0.24);color:#0B1F38;font:400 1.0625rem/1 'Schibsted Grotesk',sans-serif;outline:none;transition:border-color 240ms ease" style-focus="border-bottom-color:#1F5FA8" />
+        </label>
+        <label style="flex:1 1 220px;min-width:min(100%,220px);display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Access to the yard</span>
+          <select style="min-height:52px;padding:0 2px;background:none;border:0;border-bottom:1px solid rgba(11,31,56,0.24);color:#0B1F38;font:400 1.0625rem/1 'Schibsted Grotesk',sans-serif;outline:none;appearance:none">
+            <option>Wide side access</option>
+            <option>Narrow side access</option>
+            <option>Through the house only</option>
+            <option>Crane or excavator access needed</option>
+            <option>Not sure</option>
+          </select>
+        </label>
+        <label style="flex:1 1 100%;display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Is the block sloped?</span>
+          <select style="min-height:52px;padding:0 2px;background:none;border:0;border-bottom:1px solid rgba(11,31,56,0.24);color:#0B1F38;font:400 1.0625rem/1 'Schibsted Grotesk',sans-serif;outline:none;appearance:none">
+            <option>Flat</option>
+            <option>Gentle slope</option>
+            <option>Steep — retaining likely</option>
+            <option>Not sure</option>
+          </select>
+        </label>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isStep3 }}">
+      <div style="display:flex;flex-wrap:wrap;gap:20px;animation:ap2-acc 300ms ease both">
+        <label style="flex:1 1 100%;display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">What are you planning?</span>
+          <select style="min-height:52px;padding:0 2px;background:none;border:0;border-bottom:1px solid rgba(11,31,56,0.24);color:#0B1F38;font:400 1.0625rem/1 'Schibsted Grotesk',sans-serif;outline:none;appearance:none">
+            <option>New concrete pool</option>
+            <option>Lap pool</option>
+            <option>Plunge pool or spa</option>
+            <option>Pool and landscaping</option>
+            <option>Renovation or re-design</option>
+            <option>Not sure yet</option>
+          </select>
+        </label>
+        <label style="flex:1 1 220px;min-width:min(100%,220px);display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Do you have plans drawn?</span>
+          <select style="min-height:52px;padding:0 2px;background:none;border:0;border-bottom:1px solid rgba(11,31,56,0.24);color:#0B1F38;font:400 1.0625rem/1 'Schibsted Grotesk',sans-serif;outline:none;appearance:none">
+            <option>Yes — architect or designer engaged</option>
+            <option>Concept sketches only</option>
+            <option>Nothing yet</option>
+          </select>
+        </label>
+        <label style="flex:1 1 220px;min-width:min(100%,220px);display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Ideal start</span>
+          <select style="min-height:52px;padding:0 2px;background:none;border:0;border-bottom:1px solid rgba(11,31,56,0.24);color:#0B1F38;font:400 1.0625rem/1 'Schibsted Grotesk',sans-serif;outline:none;appearance:none">
+            <option>As soon as possible</option>
+            <option>Within 3 months</option>
+            <option>Within 6 months</option>
+            <option>Next year</option>
+            <option>Just researching</option>
+          </select>
+        </label>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isStep4 }}">
+      <div style="display:flex;flex-direction:column;gap:20px;animation:ap2-acc 300ms ease both">
+        <label style="display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 0.6875rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#4A6180">Anything else Tony should know?</span>
+          <textarea rows="5" placeholder="Existing structures, budget range, neighbours, heritage overlay, anything already quoted." style="padding:12px 2px;background:none;border:0;border-bottom:1px solid rgba(11,31,56,0.24);color:#0B1F38;font:400 1.0625rem/1.65 'Schibsted Grotesk',sans-serif;outline:none;resize:vertical;transition:border-color 240ms ease" style-focus="border-bottom-color:#1F5FA8"></textarea>
+        </label>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isDone }}">
+      <div style="display:flex;flex-direction:column;gap:18px;padding:clamp(20px,3vw,32px) 0;animation:ap2-acc 300ms ease both">
+        <p style="margin:0;max-width:24ch;font:600 clamp(1.5rem,3vw,2rem)/1.2 'Schibsted Grotesk',system-ui,sans-serif;color:#0B1F38">Thank you — your enquiry is on its way.</p>
+        <p style="margin:0;max-width:44ch;font:400 1.0625rem/1.68 'Schibsted Grotesk',sans-serif;color:#3F5771">Tony will be in touch shortly to arrange a time to look at the site.</p>
+        <div>
+          <button onClick="{{ closeModal }}" style="display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 34px;background:#1F5FA8;color:#FFFFFF;border:0;border-radius:999px;font:500 0.8125rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 260ms ease" style-hover="background:#04347C">Close</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ notDone }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-top:clamp(26px,3.4vw,38px);padding-top:clamp(20px,2.6vw,28px);border-top:1px solid rgba(11,31,56,0.12)">
+        <sc-if value="{{ canGoBack }}">
+          <button onClick="{{ prevStep }}" style="display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;background:none;border:1px solid rgba(11,31,56,0.2);border-radius:999px;color:#0B1F38;font:500 0.8125rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:background 220ms ease,color 220ms ease" style-hover="background:#0B1F38;color:#FFFFFF">Back</button>
+        </sc-if>
+        <sc-if value="{{ isFirstStep }}" hint-placeholder-val="{{ true }}">
+          <a href="tel:+61406999456" style="display:inline-flex;align-items:center;min-height:52px;font:500 0.8125rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.08em;color:#1F5FA8">Or just call 0406 999 456</a>
+        </sc-if>
+        <button onClick="{{ nextStep }}" style="display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 36px;background:#1F5FA8;color:#FFFFFF;border:0;border-radius:999px;font:500 0.8125rem/1 'Schibsted Grotesk',sans-serif;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 260ms ease" style-hover="background:#04347C">{{ nextLabel }}</button>
+      </div>
+    </sc-if>
+
+  </div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;revealAnimations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  state = {
+    isWide: typeof window !== 'undefined' ? window.innerWidth >= 1040 : true,
+    menuOpen: false,
+    open: 0,
+    submitted: false,
+    modalOpen: false,
+    step: 1
+  };
+
+  STEPS = [
+    { label: 'Step 1 of 4', title: 'First, who are we speaking with?' },
+    { label: 'Step 2 of 4', title: 'Tell us about the site.' },
+    { label: 'Step 3 of 4', title: 'What do you have in mind?' },
+    { label: 'Step 4 of 4', title: 'Anything else?' }
+  ];
+
+  FAQ = [
+    { q: 'How long does a concrete pool take to build?',
+      a: 'A concrete pool is built in stages — excavation, steel, shell, services, interior finish and surrounds — with curing time between several of them. We will give you a firm programme once we have seen the site.' },
+    { q: 'Do I need council approval?',
+      a: 'Most residential pools go through either Complying Development or a full DA, depending on your block, setbacks and any heritage or bushfire overlays. We prepare the documentation and manage the approval as part of the job.' },
+    { q: 'Why concrete rather than fibreglass?',
+      a: 'Concrete is formed to the site rather than the site being formed to a mould, so it handles slope, difficult access and non-standard shapes. It is also what makes infinity edges, glass walls, windows and true lap dimensions possible.' },
+    { q: 'Can you work with my architect or landscape designer?',
+      a: 'Yes. We work regularly with pool designers, architects, home builders and suppliers, and are just as comfortable coming in on documented plans as starting from a blank site.' },
+    { q: 'What does a pool cost?',
+      a: 'It depends far more on the site than on the pool — access, slope, soil, retaining and engineering usually move the number more than size does. We will put a real number in front of you after a site visit, not before.' }
+  ];
+
+  componentDidMount() {
+    this._onResize = () => {
+      const wide = window.innerWidth >= 1040;
+      if (wide !== this.state.isWide) this.setState({ isWide: wide, menuOpen: false });
+    };
+    window.addEventListener('resize', this._onResize);
+
+    this.setupParallax();
+    this.setupReveals();
+  }
+
+  componentDidUpdate(prev) {
+    document.body.style.overflow = this.state.modalOpen ? 'hidden' : '';
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
+    if (this._io) this._io.disconnect();
+    if (this._t) clearTimeout(this._t);
+    if (this._rafRail) cancelAnimationFrame(this._rafRail);
+  }
+
+  setupParallax() {
+    const el = document.querySelector('[data-parallax]');
+    if (!el || this.props.parallax === false) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY || 0;
+      el.style.transform = 'translate3d(0,' + (y * 0.16) + 'px,0)';
+      ticking = false;
+    };
+    this._onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    update();
+  }
+
+  setupReveals() {
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    const show = el => { el.style.opacity = '1'; el.style.transform = 'none'; };
+    const animate = this.props.revealAnimations !== false;
+
+    if (!animate || !('IntersectionObserver' in window)) { els.forEach(show); return; }
+
+    this._io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => { if (e.isIntersecting) { show(e.target); obs.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+
+    els.forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight) show(el);
+      else this._io.observe(el);
+    });
+
+    this._t = setTimeout(() => els.forEach(show), 3500);
+  }
+
+  railBy(dir) {
+    const rail = document.querySelector('[data-rail]');
+    if (!rail) return;
+    const cards = Array.from(rail.querySelectorAll('figure'));
+    if (!cards.length) return;
+    const anchor = rail.getBoundingClientRect().left;
+
+    // Only re-measure when idle; mid-tween we trust the tracked index so rapid clicks accumulate.
+    if (this._rafRail == null) {
+      let cur = 0, best = Infinity;
+      cards.forEach((c, i) => {
+        const d = Math.abs(c.getBoundingClientRect().left - anchor);
+        if (d < best) { best = d; cur = i; }
+      });
+      this._railIndex = cur;
+    }
+
+    const next = Math.min(cards.length - 1, Math.max(0, (this._railIndex || 0) + dir));
+    if (next === this._railIndex) return;
+    this._railIndex = next;
+
+    const target = cards[next];
+    this.tweenRail(rail, rail.scrollLeft + (target.getBoundingClientRect().left - anchor));
+  }
+
+  tweenRail(rail, to) {
+    if (this._rafRail != null) {
+      cancelAnimationFrame(this._rafRail);
+      this._rafRail = null;
+    } else {
+      // Capture the authored value only when no tween is in flight, so it can never read back 'none'.
+      this._railSnap = rail.style.scrollSnapType || 'x mandatory';
+    }
+    const from = rail.scrollLeft;
+    const dist = to - from;
+    const dur = 460;
+    const t0 = performance.now();
+    rail.style.scrollSnapType = 'none';
+    const step = now => {
+      const p = Math.min(1, (now - t0) / dur);
+      const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      rail.scrollLeft = from + dist * e;
+      if (p < 1) {
+        this._rafRail = requestAnimationFrame(step);
+      } else {
+        rail.style.scrollSnapType = this._railSnap || 'x mandatory';
+        this._rafRail = null;
+      }
+    };
+    this._rafRail = requestAnimationFrame(step);
+  }
+
+  renderVals() {
+    const open = this.state.open;
+    const step = this.state.step;
+    return {
+      isWide: this.state.isWide,
+      isNarrow: !this.state.isWide,
+      menuOpen: this.state.menuOpen,
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      handleSubmit: e => { e.preventDefault(); this.setState({ submitted: true }); },
+      modalOpen: this.state.modalOpen,
+      openModal: e => { if (e && e.preventDefault) e.preventDefault(); this.setState({ modalOpen: true, step: 1, menuOpen: false }); },
+      closeModal: () => this.setState({ modalOpen: false }),
+      stepLabel: step > 4 ? 'Enquiry sent' : this.STEPS[step - 1].label,
+      stepTitle: step > 4 ? 'Thank you.' : this.STEPS[step - 1].title,
+      bars: [1, 2, 3, 4].map(i => ({ filled: i <= Math.min(step, 4) })),
+      isStep1: step === 1,
+      isStep2: step === 2,
+      isStep3: step === 3,
+      isStep4: step === 4,
+      isDone: step > 4,
+      notDone: step <= 4,
+      canGoBack: step > 1 && step <= 4,
+      isFirstStep: step === 1,
+      nextLabel: step === 4 ? 'Send enquiry' : 'Continue',
+      nextStep: () => this.setState(s => ({ step: s.step + 1, submitted: s.step === 4 ? true : s.submitted })),
+      prevStep: () => this.setState(s => ({ step: Math.max(1, s.step - 1) })),
+      scrollPrev: () => this.railBy(-1),
+      scrollNext: () => this.railBy(1),
+      faqs: this.FAQ.map((f, i) => ({
+        q: f.q,
+        a: f.a,
+        expanded: open === i ? 'true' : 'false',
+        isOpen: open === i,
+        isClosed: open !== i,
+        toggle: () => this.setState(s => ({ open: s.open === i ? -1 : i }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
